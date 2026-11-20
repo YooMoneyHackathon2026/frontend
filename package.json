@@ -2,13 +2,23 @@
   "name": "yoomoneyhack-workspace",
   "private": true,
   "engines": {
-    "node": ">=22.20.0"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
     "spec:list": "openspec list",
-    "spec:validate": "openspec validate --all --strict --no-interactive"
+    "spec:validate": "openspec validate --all --strict --no-interactive",
+    "flow:setup": "node scripts/setup-flow.mjs",
+    "prepare": "npm run flow:setup",
+    "tag:patch": "node scripts/flow.mjs patch",
+    "tag:minor": "node scripts/flow.mjs minor",
+    "tag:major": "node scripts/flow.mjs major",
+    "tag:rc": "node scripts/flow.mjs rc",
+    "tag:publish": "node scripts/flow.mjs publish"
   },
   "devDependencies": {
-    "@fission-ai/openspec": "2.1.1"
-  }
+    "@commitlint/cli": "21.2.4",
+    "@fission-ai/openspec": "2.1.1",
+    "semver": "7.8.6"
+  },
+  "version": "0.0.1"
 }

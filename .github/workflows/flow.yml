@@ -1,0 +1,35 @@
+name: Git Flow
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    branches: [develop, main]
+permissions:
+  contents: read
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26'
+      - run: npm ci --ignore-scripts
+      - name: Check pull request
+        env:
+          SRC: ${{ github.head_ref }}
+          TARGET: ${{ github.base_ref }}
+          TITLE: ${{ github.event.pull_request.title }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [[ "$TARGET" == main ]]; then
+            [[ "$SRC" =~ ^(hotfix|chore)/[a-z0-9]+(-[a-z0-9]+)*$ || ( "$SRC" == develop && "$AUTHOR" == IFraimG ) ]]
+          else
+            [[ "$SRC" =~ ^(feature|bugfix|hotfix|chore)/[a-z0-9]+(-[a-z0-9]+)*$ || "$SRC" == main ]]
+          fi
+          node --input-type=module -e 'import {types} from "./commitlint.config.mjs"; if (!new RegExp("^("+types.join("|")+"):\\s\\S").test(process.env.TITLE)) process.exit(1)'
+          npx --no-install commitlint --from "$BASE_SHA" --to "$HEAD_SHA"
