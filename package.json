@@ -1,0 +1,14 @@
+{
+  "name": "yoomoneyhack-workspace",
+  "private": true,
+  "engines": {
+    "node": ">=22.20.0"
+  },
+  "scripts": {
+    "spec:list": "openspec list",
+    "spec:validate": "openspec validate --all --strict --no-interactive"
+  },
+  "devDependencies": {
+    "@fission-ai/openspec": "2.1.1"
+  }
+}

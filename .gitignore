@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+.repo-sync/
+repo-sync.local.json
+/openspec/changes/add-repository-sync/
+/.agents/repository-sync.md
+/openspec/specs/repository-sync/
+/openspec/changes/archive/*-add-repository-sync/
