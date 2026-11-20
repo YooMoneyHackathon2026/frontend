@@ -6,3 +6,8 @@ repo-sync.local.json
 /.agents/repository-sync.md
 /openspec/specs/repository-sync/
 /openspec/changes/archive/*-add-repository-sync/
+
+.env
+.env.example
+
+.cert
